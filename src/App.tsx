@@ -4,6 +4,7 @@ import Hero from './sections/Hero'
 import About from './sections/About'
 import Classes from './sections/Classes'
 import AppSection from './sections/AppSection'
+import InstagramSection from './sections/InstagramSection'
 
 function App() {
   useDirection()
@@ -14,6 +15,7 @@ function App() {
       <About />
       <Classes />
       <AppSection />
+      <InstagramSection />
     </MainLayout>
   )
 }

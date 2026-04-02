@@ -38,4 +38,9 @@ export const en = {
       "Membership purchase",
     ],
   },
+  instagram: {
+    title: "Instagram",
+    subtitle: "Latest posts from our community",
+    follow: "Follow us on Instagram",
+  },
 };

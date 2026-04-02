@@ -38,4 +38,9 @@ export const ru = {
       "Покупка абонемента",
     ],
   },
+  instagram: {
+    title: "Instagram",
+    subtitle: "Последние посты нашего сообщества",
+    follow: "Подписаться в Instagram",
+  },
 };

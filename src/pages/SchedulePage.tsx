@@ -10,7 +10,7 @@ export default function SchedulePage() {
         const fetchSchedule = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('/api/schedule');
+                const response = await fetch('/api/boostapp');
                 const data: ScheduleResponse = await response.json();
 
                 if (!data.success) {

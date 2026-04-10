@@ -56,4 +56,17 @@ export const ru = {
     subtitle: "Последние посты нашего сообщества",
     follow: "Подписаться в Instagram",
   },
+  schedule: {
+    title: "Расписание",
+    loading: "Загрузка расписания...",
+  },
+  days: {
+    mon: "ПН",
+    tue: "ВТ",
+    wed: "СР",
+    thu: "ЧТ",
+    fri: "ПТ",
+    sat: "СБ",
+    sun: "ВС",
+  },
 };

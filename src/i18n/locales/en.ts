@@ -57,4 +57,17 @@ export const en = {
     subtitle: "Latest posts from our community",
     follow: "Follow us on Instagram",
   },
+  schedule: {
+    title: "Schedule",
+    loading: "Loading schedule...",
+  },
+  days: {
+    mon: "Mon",
+    tue: "Tue",
+    wed: "Wed",
+    thu: "Thu",
+    fri: "Fri",
+    sat: "Sat",
+    sun: "Sun",
+  },
 };

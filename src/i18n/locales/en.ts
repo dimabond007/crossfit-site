@@ -63,6 +63,11 @@ export const en = {
   schedule: {
     title: "Schedule",
     loading: "Loading schedule...",
+    today: "Today",
+    all: "All",
+    coach: "Coach",
+    type: "Type",
+    full: "Full",
   },
   days: {
     mon: "Mon",

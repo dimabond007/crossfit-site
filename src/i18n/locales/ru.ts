@@ -62,6 +62,11 @@ export const ru = {
   schedule: {
     title: "Расписание",
     loading: "Загрузка расписания...",
+    today: "Сегодня",
+    all: "Все",
+    coach: "Тренер",
+    type: "Тип",
+    full: "Занято",
   },
   days: {
     mon: "ПН",

@@ -63,6 +63,11 @@ export const he = {
   schedule: {
     title: "לוח שבועי",
     loading: "טוען לוח שבועי...",
+    today: "היום",
+    all: "כל היום",
+    coach: "מאמן",
+    type: "סוג",
+    full: "מלא",
   },
   days: {
     mon: "א׳",

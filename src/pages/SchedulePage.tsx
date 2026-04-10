@@ -15,7 +15,7 @@ interface ClassItem {
 const DAYS_KEYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 export default function SchedulePage() {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const [classes, setClasses] = useState<ClassItem[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -28,18 +28,18 @@ export default function SchedulePage() {
             })
     }, [])
 
-    // Группируем по дням недели (0-6)
+
     const weekGrid = useMemo(() => {
         const grid: Record<number, ClassItem[]> = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
 
         classes.forEach(item => {
             const dayIndex = new Date(item.date).getDay();
-            // В JS 0 - это Воскресенье. Переставим, чтобы 0 был Понедельник:
+
             const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
             grid[adjustedIndex].push(item);
         });
 
-        // Сортируем внутри дня по времени
+
         Object.values(grid).forEach(dayClasses => {
             dayClasses.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
         });
@@ -57,16 +57,16 @@ export default function SchedulePage() {
                     {t('schedule.title')}
                 </h1>
 
-                {/* ДЕСТОПНАЯ СЕТКА (от 1024px) */}
+
                 <div className="hidden lg:grid lg:grid-cols-7 lg:gap-4">
                     {DAYS_KEYS.map((day, idx) => (
                         <div key={day} className="flex flex-col">
-                            {/* Заголовок дня */}
+
                             <div className="mb-6 text-center text-xl font-black uppercase tracking-widest text-black/30 dark:text-white/30">
                                 {t(`days.${day.slice(0, 3).toLowerCase()}`)}
                             </div>
 
-                            {/* Колонка занятий */}
+
                             <div className="flex flex-col gap-3">
                                 {weekGrid[idx].map(cl => (
                                     <div
@@ -83,7 +83,7 @@ export default function SchedulePage() {
                                             {cl.coach}
                                         </div>
 
-                                        {/* Цветная полоска как в рефе */}
+
                                         <div
                                             className="absolute left-0 top-0 h-full w-1 rounded-l-xl"
                                             style={{ backgroundColor: cl.color || '#ccc' }}
@@ -95,7 +95,6 @@ export default function SchedulePage() {
                     ))}
                 </div>
 
-                {/* МОБИЛЬНЫЙ ВИД (Стек по дням) */}
                 <div className="flex flex-col gap-10 lg:hidden">
                     {DAYS_KEYS.map((day, idx) => weekGrid[idx].length > 0 && (
                         <div key={day}>

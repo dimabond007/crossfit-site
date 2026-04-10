@@ -8,187 +8,117 @@ interface ClassItem {
     date: string
     timeStart: string
     timeEnd: string
-    capacity: number
-    registered: number
     full: boolean
-    area?: string
     color?: string
 }
 
+const DAYS_KEYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
 export default function SchedulePage() {
     const { t, i18n } = useTranslation()
-
     const [classes, setClasses] = useState<ClassItem[]>([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
-    const [selectedDay, setSelectedDay] = useState<string | null>(null)
-    const [selectedCoach, setSelectedCoach] = useState<string | null>(null)
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch('/api/boostapp')
-                const data = await res.json()
-                setClasses(data.data?.classes || data.classes || [])
-            } catch (e: any) {
-                setError(e.message)
-            } finally {
+        fetch('/api/boostapp')
+            .then(res => res.json())
+            .then(data => {
+                setClasses(data.classes || [])
                 setLoading(false)
-            }
-        }
-
-        fetchData()
+            })
     }, [])
 
-    // ✅ группировка по дате
-    const grouped = useMemo(() => {
-        return classes.reduce((acc, item) => {
-            if (!acc[item.date]) acc[item.date] = []
-            acc[item.date].push(item)
-            return acc
-        }, {} as Record<string, ClassItem[]>)
+    // Группируем по дням недели (0-6)
+    const weekGrid = useMemo(() => {
+        const grid: Record<number, ClassItem[]> = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }
+
+        classes.forEach(item => {
+            const dayIndex = new Date(item.date).getDay();
+            // В JS 0 - это Воскресенье. Переставим, чтобы 0 был Понедельник:
+            const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+            grid[adjustedIndex].push(item);
+        });
+
+        // Сортируем внутри дня по времени
+        Object.values(grid).forEach(dayClasses => {
+            dayClasses.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+        });
+
+        return grid;
     }, [classes])
 
-    // ✅ список дней
-    const days = Object.keys(grouped)
-
-    // ✅ список тренеров
-    const coaches = Array.from(new Set(classes.map(c => c.coach)))
-
-    // ✅ фильтрация
-    const filteredGrouped = useMemo(() => {
-        const result: Record<string, ClassItem[]> = {}
-
-        for (const date in grouped) {
-            let list = grouped[date]
-
-            if (selectedDay && date !== selectedDay) continue
-
-            if (selectedCoach) {
-                list = list.filter(c => c.coach === selectedCoach)
-            }
-
-            if (list.length) result[date] = list
-        }
-
-        return result
-    }, [grouped, selectedDay, selectedCoach])
-
-    const formatDate = (date: string) =>
-        new Date(date).toLocaleDateString(i18n.language, {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long'
-        })
-
-    if (loading) return <div className="p-10 text-center">{t('schedule.loading')}</div>
-    if (error) return <div className="p-10 text-center text-red-500">{error}</div>
+    if (loading) return <div className="py-20 text-center font-bold uppercase tracking-widest">{t('schedule.loading')}</div>
 
     return (
-        <div className="mx-auto max-w-6xl px-4 py-16">
+        <section className="bg-white px-4 py-16 dark:bg-black">
+            <div className="mx-auto max-w-[1400px]">
 
-            {/* ✅ HEADER */}
-            <div className="mb-10 text-center">
-                <h1 className="text-3xl font-bold sm:text-4xl">
+                <h1 className="mb-12 text-center text-4xl font-black uppercase italic tracking-tighter sm:text-6xl">
                     {t('schedule.title')}
                 </h1>
-            </div>
 
-            {/* ✅ FILTERS */}
-            <div className="mb-8 flex flex-wrap gap-3">
+                {/* ДЕСТОПНАЯ СЕТКА (от 1024px) */}
+                <div className="hidden lg:grid lg:grid-cols-7 lg:gap-4">
+                    {DAYS_KEYS.map((day, idx) => (
+                        <div key={day} className="flex flex-col">
+                            {/* Заголовок дня */}
+                            <div className="mb-6 text-center text-xl font-black uppercase tracking-widest text-black/30 dark:text-white/30">
+                                {t(`days.${day.slice(0, 3).toLowerCase()}`)}
+                            </div>
 
-                {/* дни */}
-                {days.map(day => (
-                    <button
-                        key={day}
-                        onClick={() => setSelectedDay(day === selectedDay ? null : day)}
-                        className={`rounded-full px-4 py-2 text-sm transition 
-            ${selectedDay === day
-                                ? 'bg-black text-white dark:bg-white dark:text-black'
-                                : 'bg-black/10 dark:bg-white/10'}`}
-                    >
-                        {formatDate(day)}
-                    </button>
-                ))}
-
-                {/* тренеры */}
-                {coaches.map(coach => (
-                    <button
-                        key={coach}
-                        onClick={() => setSelectedCoach(coach === selectedCoach ? null : coach)}
-                        className={`rounded-full px-4 py-2 text-sm transition 
-            ${selectedCoach === coach
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-blue-600/10'}`}
-                    >
-                        {coach}
-                    </button>
-                ))}
-
-            </div>
-
-            {/* ✅ LIST */}
-            <div className="space-y-10">
-
-                {Object.entries(filteredGrouped).map(([date, list]) => (
-                    <div key={date}>
-                        <h2 className="mb-4 text-xl font-semibold">
-                            {formatDate(date)}
-                        </h2>
-
-                        <div className="grid gap-4">
-                            {list.map(item => (
-                                <div
-                                    key={item.id}
-                                    className="rounded-2xl border border-black/10 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-black"
-                                    style={{
-                                        borderLeft: `6px solid ${item.color || '#888'}`
-                                    }}
-                                >
-                                    <div className="flex items-center justify-between">
-
-                                        <div>
-                                            <div className="text-lg font-semibold">
-                                                {item.title}
-                                            </div>
-
-                                            <div className="text-sm text-black/60 dark:text-white/60">
-                                                {item.timeStart} — {item.timeEnd} · {item.coach}
-                                            </div>
+                            {/* Колонка занятий */}
+                            <div className="flex flex-col gap-3">
+                                {weekGrid[idx].map(cl => (
+                                    <div
+                                        key={cl.id}
+                                        className="group relative flex flex-col rounded-xl border border-black/5 bg-gray-50 p-4 transition-all hover:border-black/20 hover:shadow-lg dark:border-white/5 dark:bg-white/5 dark:hover:border-white/20"
+                                    >
+                                        <div className="mb-1 text-sm font-bold uppercase tracking-tight text-black/40 dark:text-white/40">
+                                            {cl.timeStart} - {cl.timeEnd}
+                                        </div>
+                                        <div className="text-base font-black uppercase leading-tight">
+                                            {cl.title}
+                                        </div>
+                                        <div className="mt-2 text-xs font-medium opacity-60">
+                                            {cl.coach}
                                         </div>
 
-                                        <div className="text-right text-sm">
-                                            {item.full ? (
-                                                <span className="text-red-500">
-                                                    {t('schedule.full')}
-                                                </span>
-                                            ) : (
-                                                <span className="text-green-600">
-                                                    {item.registered}/{item.capacity}
-                                                </span>
-                                            )}
-                                        </div>
-
+                                        {/* Цветная полоска как в рефе */}
+                                        <div
+                                            className="absolute left-0 top-0 h-full w-1 rounded-l-xl"
+                                            style={{ backgroundColor: cl.color || '#ccc' }}
+                                        />
                                     </div>
-
-                                    {item.area && (
-                                        <div className="mt-2 text-xs text-black/50 dark:text-white/50">
-                                            {item.area}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
 
-                {!Object.keys(filteredGrouped).length && (
-                    <div className="text-center text-black/50 dark:text-white/50">
-                        {t('schedule.empty')}
-                    </div>
-                )}
+                {/* МОБИЛЬНЫЙ ВИД (Стек по дням) */}
+                <div className="flex flex-col gap-10 lg:hidden">
+                    {DAYS_KEYS.map((day, idx) => weekGrid[idx].length > 0 && (
+                        <div key={day}>
+                            <h2 className="mb-4 text-2xl font-black uppercase italic tracking-widest underline decoration-yellow-400 decoration-4 underline-offset-8">
+                                {t(`days.${day.slice(0, 3).toLowerCase()}`)}
+                            </h2>
+                            <div className="grid gap-3 sm:grid-cols-2">
+                                {weekGrid[idx].map(cl => (
+                                    <div key={cl.id} className="flex items-center justify-between rounded-2xl border border-black/10 p-5 dark:border-white/10">
+                                        <div>
+                                            <div className="text-sm font-bold text-black/50 dark:text-white/50">{cl.timeStart} - {cl.timeEnd}</div>
+                                            <div className="text-xl font-black uppercase">{cl.title}</div>
+                                            <div className="text-sm">{cl.coach}</div>
+                                        </div>
+                                        <div className="h-10 w-1 rounded-full" style={{ backgroundColor: cl.color || '#eee' }} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
             </div>
-        </div>
+        </section>
     )
 }

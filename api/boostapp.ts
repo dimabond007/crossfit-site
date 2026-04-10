@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { BoostappClass, ScheduleResponse } from "../src/types/types";
+import { BoostappClass, ScheduleResponse } from "../src/types/types.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -23,6 +23,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json, text/plain, */*",
+          Origin: "https://1pa.co",
+          Referer: "https://1pa.co/",
+          "User-Agent": "Mozilla/5.0",
         },
         body: JSON.stringify({
           getUrl: "5fd5f512f415d",
@@ -33,34 +36,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }),
       },
     );
+    const text = await response.text();
 
-    const raw = await response.json();
+    try {
+      const raw = JSON.parse(text);
 
-    // Мапим сырые данные в наш чистый интерфейс
-    const classes: BoostappClass[] = (raw?.data?.classes || []).map(
-      (item: any) => ({
-        id: String(item.id),
-        title: item.className,
-        coach: item.guideName,
-        date: item.startDate,
-        timeStart: item.startTime,
-        timeEnd: item.endTime,
-        price: Number(item.purchaseAmount),
-        registered: Number(item.clientRegister),
-        capacity: Number(item.maxClient),
-        full: Boolean(item.isClassFull),
-        closed: Boolean(item.registration_closed),
-        area: item.section?.Title || null,
-        color: item.color || item.class_color || null,
-      }),
-    );
+      const classes: BoostappClass[] = (raw?.data?.classes || []).map(
+        (item: any) => ({
+          id: String(item.id),
+          title: item.className,
+          coach: item.guideName,
+          date: item.startDate,
+          timeStart: item.startTime,
+          timeEnd: item.endTime,
+          price: Number(item.purchaseAmount),
+          registered: Number(item.clientRegister),
+          capacity: Number(item.maxClient),
+          full: Boolean(item.isClassFull),
+          closed: Boolean(item.registration_closed),
+          area: item.section?.Title || null,
+          color: item.color || item.class_color || null,
+        }),
+      );
 
-    return res.status(200).json({
-      success: true,
-      earliestClassDate: raw?.data?.earliestClassDate,
-      enableDays: raw?.data?.enableDays,
-      classes,
-    });
+      return res.status(200).json({
+        success: true,
+        earliestClassDate: raw?.data?.earliestClassDate,
+        enableDays: raw?.data?.enableDays,
+        classes,
+      });
+    } catch (e) {
+      console.error("NOT JSON RESPONSE:", text);
+      return res.status(500).json({
+        success: false,
+        error: "Boostapp returned HTML instead of JSON",
+      });
+    }
   } catch (error: any) {
     return res.status(500).json({
       success: false,

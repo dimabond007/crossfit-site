@@ -1,4 +1,4 @@
-
+import { Outlet } from 'react-router-dom'
 import Header from '../components/Header'
 
 const MainLayout = ({ children }: React.PropsWithChildren) => {
@@ -8,6 +8,7 @@ const MainLayout = ({ children }: React.PropsWithChildren) => {
 
             <main className="flex-1">
                 {children}
+                <Outlet />
             </main>
 
             <footer className="border-t border-black/10 dark:border-white/10 p-4 text-center text-sm">

@@ -31,6 +31,12 @@ export default function SchedulePage() {
     const [activeType, setActiveType] = useState<string | null>(null)
     const todayIdx = getTodayIndex()
 
+    const translateBoostapp = (text: string) => {
+        const key = `boostapp.${text}`
+        const translated = t(key)
+        return translated === key ? text : translated
+    }
+
     useEffect(() => {
         fetch('/api/boostapp')
             .then(res => res.json())
@@ -43,13 +49,19 @@ export default function SchedulePage() {
 
     const coaches = useMemo(() => {
         const set = new Set(classes.map(c => c.coach).filter(Boolean))
-        return Array.from(set).sort()
-    }, [classes])
+        return Array.from(set).sort().map(coach => ({
+            original: coach,
+            display: translateBoostapp(coach)
+        }))
+    }, [classes, t])
 
     const types = useMemo(() => {
         const set = new Set(classes.map(c => c.title).filter(Boolean))
-        return Array.from(set).sort()
-    }, [classes])
+        return Array.from(set).sort().map(type => ({
+            original: type,
+            display: translateBoostapp(type)
+        }))
+    }, [classes, t])
 
     const filtered = useMemo(() => {
         return classes.filter(c => {
@@ -128,11 +140,11 @@ export default function SchedulePage() {
                             </button>
                             {coaches.map(coach => (
                                 <button
-                                    key={coach}
-                                    onClick={() => setActiveCoach(activeCoach === coach ? null : coach)}
-                                    className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide transition ${activeCoach === coach ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/10 hover:border-black/30 dark:border-white/10 dark:hover:border-white/30'}`}
+                                    key={coach.original}
+                                    onClick={() => setActiveCoach(activeCoach === coach.original ? null : coach.original)}
+                                    className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide transition ${activeCoach === coach.original ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/10 hover:border-black/30 dark:border-white/10 dark:hover:border-white/30'}`}
                                 >
-                                    {coach}
+                                    {coach.display}
                                 </button>
                             ))}
                         </div>
@@ -150,11 +162,11 @@ export default function SchedulePage() {
                             </button>
                             {types.map(type => (
                                 <button
-                                    key={type}
-                                    onClick={() => setActiveType(activeType === type ? null : type)}
-                                    className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide transition ${activeType === type ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/10 hover:border-black/30 dark:border-white/10 dark:hover:border-white/30'}`}
+                                    key={type.original}
+                                    onClick={() => setActiveType(activeType === type.original ? null : type.original)}
+                                    className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide transition ${activeType === type.original ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/10 hover:border-black/30 dark:border-white/10 dark:hover:border-white/30'}`}
                                 >
-                                    {type}
+                                    {type.display}
                                 </button>
                             ))}
                         </div>
@@ -186,10 +198,10 @@ export default function SchedulePage() {
                                                 {cl.timeStart} — {cl.timeEnd}
                                             </div>
                                             <div className="text-base font-black uppercase leading-tight">
-                                                {cl.title}
+                                                {translateBoostapp(cl.title)}
                                             </div>
                                             <div className="mt-2 flex items-center justify-between">
-                                                <span className="text-xs font-medium opacity-60">{cl.coach}</span>
+                                                <span className="text-xs font-medium opacity-60">{translateBoostapp(cl.coach)}</span>
                                                 {cl.full && <Badge variant="red">{t('schedule.full')}</Badge>}
                                             </div>
                                         </Card>

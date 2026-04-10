@@ -1,3 +1,4 @@
+// prettier-ignore
 export const en = {
   hero: {
     title: "Move well, feel good, look good",
@@ -77,5 +78,11 @@ export const en = {
     fri: "Fri",
     sat: "Sat",
     sun: "Sun",
+  },
+  boostapp: {
+    "רוי טביב": "Roy Tabib",
+    "יונתן": "Yonatan",
+    "אימון ניסיון": "Trial workout",
+    "קרוספיט": "Crossfit",
   },
 };

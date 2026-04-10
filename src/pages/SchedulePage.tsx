@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { BoostappClass, ScheduleResponse } from '../types/types';
 
-export const SchedulePage: React.FC = () => {
+export default function SchedulePage() {
     const [classes, setClasses] = useState<BoostappClass[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

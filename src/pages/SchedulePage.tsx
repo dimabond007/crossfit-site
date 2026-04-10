@@ -84,6 +84,15 @@ export default function SchedulePage() {
         ]
     }, [todayIdx])
 
+    const getDayDate = (idx: number) => {
+        const now = new Date()
+        const currentIdx = getTodayIndex()
+        let diff = idx - currentIdx
+        if (diff < 0) diff += 7
+        const date = new Date(now.setDate(now.getDate() + diff))
+        return date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' })
+    }
+
     if (loading) return (
         <div className="py-20 text-center">
             <div className="grid grid-cols-7 gap-4 mx-auto max-w-[1400px] px-4">
@@ -159,9 +168,14 @@ export default function SchedulePage() {
                         return (
                             <div key={day} className="flex flex-col">
 
-                                <div className={`mb-6 text-center text-xl font-black uppercase tracking-widest transition ${isToday ? 'text-yellow-400' : 'text-black/30 dark:text-white/30'}`}>
-                                    {t(`days.${day.slice(0, 3).toLowerCase()}`)}
-                                    {isToday && <div className="mt-1 text-[10px] tracking-widest">{t('schedule.today')}</div>}
+                                <div className={`mb-6 text-center transition ${isToday ? 'text-yellow-400' : 'text-black/30 dark:text-white/30'}`}>
+                                    <div className="text-xl font-black uppercase tracking-widest leading-none">
+                                        {t(`days.${day.slice(0, 3).toLowerCase()}`)}
+                                    </div>
+                                    <div className="mt-1 text-sm font-bold opacity-60">
+                                        {getDayDate(idx)}
+                                    </div>
+                                    {isToday && <div className="mt-1 text-[10px] font-black uppercase tracking-widest">{t('schedule.today')}</div>}
                                 </div>
 
 
@@ -194,6 +208,7 @@ export default function SchedulePage() {
                             <div key={day}>
                                 <h2 className="mb-4 text-2xl font-black uppercase italic tracking-widest underline decoration-yellow-400 decoration-4 underline-offset-8">
                                     {t(`days.${day.slice(0, 3).toLowerCase()}`)}
+                                    <span className="ml-2 text-lg opacity-40 not-italic">({getDayDate(idx)})</span>
                                     {isToday && <span className="ml-3 text-sm font-bold not-italic text-yellow-400">— {t('schedule.today')}</span>}
                                 </h2>
                                 <div className="grid gap-3 sm:grid-cols-2">

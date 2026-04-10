@@ -1,23 +1,19 @@
-import MainLayout from './layouts/MainLayout'
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useDirection } from './hooks/useDirection'
-import Hero from './sections/Hero'
-import About from './sections/About'
-import Classes from './sections/Classes'
-import AppSection from './sections/AppSection'
-import InstagramSection from './sections/InstagramSection'
+import SchedulePage from './pages/SchedulePage'
+import HomePage from './pages/HomePage'
 
 function App() {
   useDirection()
 
   return (
-    <MainLayout>
-      <Hero />
-      <About />
-      <Classes />
-      <AppSection />
-      <InstagramSection />
-    </MainLayout>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/schedule" element={<SchedulePage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
-
 export default App

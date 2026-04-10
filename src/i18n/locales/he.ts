@@ -38,6 +38,20 @@ export const he = {
       "רכישת מנוי",
     ],
   },
+  team: {
+    title: "הצוות שלנו",
+    members: [
+      { name: "Stas", role: "מנהל המועדון" },
+      { name: "Mariel", role: "מנהל המועדון" },
+      { name: "Adi", role: "מנהל המועדון" },
+
+      { name: "Coach 1", role: "מאמן" },
+      { name: "Coach 2", role: "מאמן" },
+      { name: "Coach 3", role: "מאמן" },
+      { name: "Coach 4", role: "מאמן" },
+      { name: "Coach 5", role: "מאמן" },
+    ],
+  },
   instagram: {
     title: "אינסטגרם",
     subtitle: "הפוסטים האחרונים מהקהילה שלנו",

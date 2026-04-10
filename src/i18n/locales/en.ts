@@ -38,6 +38,20 @@ export const en = {
       "Membership purchase",
     ],
   },
+  team: {
+    title: "Our Team",
+    members: [
+      { name: "Stas", role: "Club Manager" },
+      { name: "Mariel", role: "Club Manager" },
+      { name: "Adi", role: "Club Manager" },
+
+      { name: "Coach 1", role: "Coach" },
+      { name: "Coach 2", role: "Coach" },
+      { name: "Coach 3", role: "Coach" },
+      { name: "Coach 4", role: "Coach" },
+      { name: "Coach 5", role: "Coach" },
+    ],
+  },
   instagram: {
     title: "Instagram",
     subtitle: "Latest posts from our community",

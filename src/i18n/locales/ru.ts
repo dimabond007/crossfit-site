@@ -38,6 +38,19 @@ export const ru = {
       "Покупка абонемента",
     ],
   },
+  team: {
+    title: "Наша команда",
+    members: [
+      { name: "Stas", role: "Менеджер клуба" },
+      { name: "Mariel", role: "Менеджер клуба" },
+      { name: "Adi", role: "Менеджер клуба" },
+      { name: "Coach 1", role: "Тренер" },
+      { name: "Coach 2", role: "Тренер" },
+      { name: "Coach 3", role: "Тренер" },
+      { name: "Coach 4", role: "Тренер" },
+      { name: "Coach 5", role: "Тренер" },
+    ],
+  },
   instagram: {
     title: "Instagram",
     subtitle: "Последние посты нашего сообщества",

@@ -1,12 +1,7 @@
 
-import type { ReactNode } from 'react'
 import Header from '../components/Header'
 
-type Props = {
-    children: ReactNode
-}
-
-const MainLayout = ({ children }: Props) => {
+const MainLayout = ({ children }: React.PropsWithChildren) => {
     return (
         <div className="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white">
             <Header />

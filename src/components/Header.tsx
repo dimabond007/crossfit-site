@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from 'lucide-react'
 import i18n from '../i18n'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
 
@@ -13,7 +14,9 @@ const Header = () => {
         <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-md dark:border-white/10 dark:bg-black/90">
             <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
                 <div className="text-lg font-bold">
-                    <img src="/logo.png" alt="Logo" className="w-20 object-contain" />
+                    <Link to="/">
+                        <img src="/logo.png" alt="Logo" className="w-20 object-contain" />
+                    </Link>
                 </div>
 
                 <div className="flex items-center gap-3">

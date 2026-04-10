@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from '../components/ui/Button'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
     const { t } = useTranslation()
@@ -29,12 +30,14 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4">
-                    <Button size="lg" variant="primary">
+                    {/* <Button size="lg" variant="primary">
                         {t('hero.cta')}
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white hover:text-black">
-                        {t('hero.secondary')}
-                    </Button>
+                    </Button> */}
+                    <Link to="/schedule">
+                        <Button size="lg" variant="primary" className="border-white/30 text-white hover:bg-white hover:text-black">
+                            {t('hero.secondary')}
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

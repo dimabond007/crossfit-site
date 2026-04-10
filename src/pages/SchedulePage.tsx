@@ -6,12 +6,18 @@ export default function SchedulePage() {
 
     useEffect(() => {
         fetch('/api/boostapp')
-            .then(res => res.json())
+            .then(res => {
+                console.log('res', res);
+                return res.json();
+            })
             .then(data => {
-                if (data && data.success) {
+                console.log('data', data);
+
+                if (data && data.data) {
                     setTrainings(data.data);
                 }
-            });
+            })
+            .catch(err => console.error('Error fetching schedule:', err));
     }, []);
     console.log('trainings', trainings);
     return (

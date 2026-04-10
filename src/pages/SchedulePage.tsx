@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { BoostappClass, ScheduleResponse } from '../types/types';
 
 export default function SchedulePage() {

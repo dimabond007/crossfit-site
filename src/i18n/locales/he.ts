@@ -1,6 +1,9 @@
 export const he = {
   hero: {
     title: "לזוז טוב, להרגיש טוב, להיראות טוב",
+    subtitle: "...",
+    cta: "הירשם",
+    secondary: "לוח שבועי",
   },
   about: {
     title: "אימונים בראשון לציון - Crossfit Impulso",

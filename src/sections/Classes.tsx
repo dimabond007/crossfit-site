@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { SectionTitle } from '../components/ui/SectionTitle'
 
 const images = [
     '/group_img.jpg',
@@ -12,14 +13,12 @@ const Classes = () => {
 
     return (
         <section className="px-4 py-20">
-            <div className="mx-auto max-w-6xl text-center">
-                <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-black/50 dark:text-white/50">
-                    {t('classes.title')}
-                </h2>
-
-                <h3 className="mb-12 text-3xl font-bold sm:text-4xl">
-                    {t('classes.subtitle')}
-                </h3>
+            <div className="mx-auto max-w-6xl">
+                <SectionTitle
+                    label={t('classes.title')}
+                    title={t('classes.subtitle')}
+                    center
+                />
 
                 <div className="grid gap-6 sm:grid-cols-3">
                     {items.map((item, i) => (
@@ -35,8 +34,7 @@ const Classes = () => {
                                 />
                                 <div className="absolute inset-0 bg-black/30" />
                             </div>
-
-                            <div className="p-5 text-lg font-medium">
+                            <div className="p-5 text-lg font-black uppercase italic tracking-tight">
                                 {item}
                             </div>
                         </div>

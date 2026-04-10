@@ -1,6 +1,9 @@
 export const ru = {
   hero: {
     title: "Двигайся правильно, чувствуй себя хорошо, выгляди хорошо",
+    subtitle: "...",
+    cta: "Записаться",
+    secondary: "Расписание",
   },
   about: {
     title: "Тренировки в Ришон-ле-Ционе - Crossfit Impulso",

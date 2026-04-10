@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { SectionTitle } from '../components/ui/SectionTitle'
+import { Button } from '../components/ui/Button'
 
 type InstagramPost = {
     id: string
@@ -20,11 +22,7 @@ const InstagramSection = () => {
         const loadPosts = async () => {
             try {
                 const res = await fetch('/api/instagram')
-
-                if (!res.ok) {
-                    throw new Error('Failed to load instagram posts')
-                }
-
+                if (!res.ok) throw new Error('Failed')
                 const data = await res.json()
                 setPosts(data.posts ?? [])
             } catch {
@@ -33,7 +31,6 @@ const InstagramSection = () => {
                 setLoading(false)
             }
         }
-
         loadPosts()
     }, [])
 
@@ -41,41 +38,29 @@ const InstagramSection = () => {
         <section className="px-4 py-20">
             <div className="mx-auto max-w-6xl">
                 <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-                    <div>
-                        <h2 className="mb-3 text-3xl font-bold sm:text-4xl">
-                            {t('instagram.title')}
-                        </h2>
-
-                        <p className="text-black/60 dark:text-white/60">
-                            {t('instagram.subtitle')}
-                        </p>
-                    </div>
-
-                    <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-full border border-black/10 px-5 py-2.5 text-sm font-medium transition hover:bg-black hover:text-white dark:border-white/10 dark:hover:bg-white dark:hover:text-black"
+                    <SectionTitle
+                        title={t('instagram.title')}
+                        subtitle={t('instagram.subtitle')}
+                    />
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => window.open('https://instagram.com', '_blank')}
                     >
                         {t('instagram.follow')}
-                    </a>
+                    </Button>
                 </div>
 
                 {loading && (
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-                        {Array.from({ length: 10 }).map((_, index) => (
-                            <div
-                                key={index}
-                                className="aspect-square animate-pulse rounded-3xl bg-black/5 dark:bg-white/10"
-                            />
+                        {Array.from({ length: 10 }).map((_, i) => (
+                            <div key={i} className="aspect-square animate-pulse rounded-3xl bg-black/5 dark:bg-white/10" />
                         ))}
                     </div>
                 )}
 
                 {!loading && error && (
-                    <div className="text-black/60 dark:text-white/60">
-                        Failed to load Instagram posts.
-                    </div>
+                    <p className="text-black/60 dark:text-white/60">{t('instagram.error')}</p>
                 )}
 
                 {!loading && !error && (

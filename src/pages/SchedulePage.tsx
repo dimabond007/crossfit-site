@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { SectionTitle } from '../components/ui/SectionTitle'
+import { Card } from '../components/ui/Card'
+import { Badge } from '../components/ui/Badge'
 
 interface ClassItem {
     id: string
@@ -47,15 +50,26 @@ export default function SchedulePage() {
         return grid;
     }, [classes])
 
-    if (loading) return <div className="py-20 text-center font-bold uppercase tracking-widest">{t('schedule.loading')}</div>
+    if (loading) return (
+        <div className="py-20 text-center">
+            <div className="grid grid-cols-7 gap-4 mx-auto max-w-[1400px] px-4">
+                {Array.from({ length: 7 }).map((_, i) => (
+                    <div key={i} className="flex flex-col gap-3">
+                        <div className="mb-6 h-6 w-3/4 mx-auto animate-pulse rounded-full bg-black/10 dark:bg-white/10" />
+                        {Array.from({ length: 4 }).map((_, j) => (
+                            <div key={j} className="h-24 animate-pulse rounded-xl bg-black/5 dark:bg-white/5" />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 
     return (
         <section className="bg-white px-4 py-16 dark:bg-black">
             <div className="mx-auto max-w-[1400px]">
 
-                <h1 className="mb-12 text-center text-4xl font-black uppercase italic tracking-tighter sm:text-6xl">
-                    {t('schedule.title')}
-                </h1>
+                <SectionTitle title={t('schedule.title')} center />
 
 
                 <div className="hidden lg:grid lg:grid-cols-7 lg:gap-4">
@@ -69,26 +83,18 @@ export default function SchedulePage() {
 
                             <div className="flex flex-col gap-3">
                                 {weekGrid[idx].map(cl => (
-                                    <div
-                                        key={cl.id}
-                                        className="group relative flex flex-col rounded-xl border border-black/5 bg-gray-50 p-4 transition-all hover:border-black/20 hover:shadow-lg dark:border-white/5 dark:bg-white/5 dark:hover:border-white/20"
-                                    >
+                                    <Card key={cl.id} accent={cl.color || '#ccc'} className="p-4">
                                         <div className="mb-1 text-sm font-bold uppercase tracking-tight text-black/40 dark:text-white/40">
-                                            {cl.timeStart} - {cl.timeEnd}
+                                            {cl.timeStart} — {cl.timeEnd}
                                         </div>
                                         <div className="text-base font-black uppercase leading-tight">
                                             {cl.title}
                                         </div>
-                                        <div className="mt-2 text-xs font-medium opacity-60">
-                                            {cl.coach}
+                                        <div className="mt-2 flex items-center justify-between">
+                                            <span className="text-xs font-medium opacity-60">{cl.coach}</span>
+                                            {cl.full && <Badge variant="red">{t('schedule.full')}</Badge>}
                                         </div>
-
-
-                                        <div
-                                            className="absolute left-0 top-0 h-full w-1 rounded-l-xl"
-                                            style={{ backgroundColor: cl.color || '#ccc' }}
-                                        />
-                                    </div>
+                                    </Card>
                                 ))}
                             </div>
                         </div>

@@ -1,6 +1,9 @@
 export const en = {
   hero: {
     title: "Move well, feel good, look good",
+    subtitle: "...",
+    cta: "Book",
+    secondary: "Schedule",
   },
   about: {
     title: "Training in Rishon LeZion - Crossfit Impulso",

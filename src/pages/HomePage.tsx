@@ -12,7 +12,7 @@ export default function HomePage() {
             <Hero />
             <About />
             <Classes />
-            <AppSection />
+            {/* <AppSection /> */}
             <TeamSection />
             <InstagramSection />
         </>

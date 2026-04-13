@@ -25,9 +25,10 @@ const Hero = () => {
                     {t('hero.title')}
                 </h1>
 
-                <p className="max-w-xl text-lg text-white/70">
-                    {t('hero.subtitle')}
-                </p>
+                <h2 className="max-w-xl text-4xl text-white/70">
+                    {/* {t('hero.subtitle')} */}
+                    <a href="https://wa.me/972547244563" target="_blank" rel="noreferrer" className="text-white hover:text-orange-500" role="link" aria-label="WhatsApp" dir="ltr">+972547244563</a>
+                </h2>
 
                 <div className="flex flex-wrap justify-center gap-4">
                     {/* <Button size="lg" variant="primary">

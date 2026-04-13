@@ -22,7 +22,7 @@ const Header = () => {
                 <div className="flex items-center gap-3">
                     <div className="hidden items-center gap-2 sm:flex">
                         <a
-                            href="https://facebook.com"
+                            href="https://facebook.com/CrossFitMermaid"
                             target="_blank"
                             rel="noreferrer"
                             className="group flex h-9 w-9 items-center justify-center rounded-full border border-black/10 transition hover:bg-black dark:border-white/10 dark:hover:bg-white"
@@ -35,7 +35,7 @@ const Header = () => {
                         </a>
 
                         <a
-                            href="https://instagram.com"
+                            href="https://instagram.com/crossfit_impulso"
                             target="_blank"
                             rel="noreferrer"
                             className="group flex h-9 w-9 items-center justify-center rounded-full border border-black/10 transition hover:bg-black dark:border-white/10 dark:hover:bg-white"
@@ -48,7 +48,7 @@ const Header = () => {
                         </a>
 
                         <a
-                            href="https://wa.me/972000000000"
+                            href="https://wa.me/972547244563"
                             target="_blank"
                             rel="noreferrer"
                             className="group flex h-9 w-9 items-center justify-center rounded-full border border-black/10 transition hover:bg-black dark:border-white/10 dark:hover:bg-white"

@@ -1,6 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { SectionTitle } from '../components/ui/SectionTitle'
 import { Card } from '../components/ui/Card'
+import { LuZap, LuTarget, LuDumbbell, LuUsers, LuTrendingUp, LuHandshake } from 'react-icons/lu'
+
+const benefitIcons = [
+    LuZap,
+    LuTarget,
+    LuDumbbell,
+    LuUsers,
+    LuTrendingUp,
+    LuHandshake,
+]
 
 const About = () => {
     const { t } = useTranslation()
@@ -15,12 +25,21 @@ const About = () => {
                     subtitle={t('about.lead')}
                 />
 
-                <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {benefits.map((item) => (
-                        <Card key={item} hover={false} className="px-4 py-3 text-base">
-                            {item}
-                        </Card>
-                    ))}
+                <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {benefits.map((item, index) => {
+                        const Icon = benefitIcons[index % benefitIcons.length]
+                        return (
+                            <Card
+                                key={item}
+                                hover={true}
+                                accent="#f97316"
+                                className="flex items-center gap-4 px-5 py-4"
+                            >
+                                <Icon className="shrink-0 text-orange-500" size={24} />
+                                <span className="text-base font-semibold">{item}</span>
+                            </Card>
+                        )
+                    })}
                 </div>
 
                 <div className="space-y-5 text-base leading-8 text-black/70 dark:text-white/70">

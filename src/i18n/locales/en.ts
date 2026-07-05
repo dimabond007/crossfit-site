@@ -2,8 +2,8 @@
 export const en = {
   hero: {
     title: "Move well, feel good, look good",
-    subtitle: "...",
-    cta: "Book",
+    subtitle: "One hour a day. Every level. Your strongest self.",
+    cta: "Book a free trial",
     secondary: "Schedule",
   },
   about: {

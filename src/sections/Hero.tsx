@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Phone } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Link } from 'react-router-dom'
 
@@ -25,21 +26,27 @@ const Hero = () => {
                     {t('hero.title')}
                 </h1>
 
-                <h2 className="max-w-xl text-4xl text-white/70">
-                    {/* {t('hero.subtitle')} */}
-                    <a href="https://wa.me/972547244563" target="_blank" rel="noreferrer" className="text-white hover:text-orange-500" role="link" aria-label="WhatsApp" dir="ltr">+972547244563</a>
+                <h2 className="max-w-xl text-2xl font-medium text-white/90 sm:text-3xl">
+                    {t('hero.subtitle')}
                 </h2>
 
                 <div className="flex flex-wrap justify-center gap-4">
-                    {/* <Button size="lg" variant="primary">
-                        {t('hero.cta')}
-                    </Button> */}
+                    <a href="https://wa.me/972547244553?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%AA%D7%90%D7%9D%20%D7%90%D7%99%D7%9E%D7%95%D7%9F%20%D7%A0%D7%99%D7%A1%D7%99%D7%95%D7%9F%20%F0%9F%92%AA" target="_blank" rel="noreferrer">
+                        <Button size="lg" variant="primary" className="!bg-orange-500 !text-white shadow-lg shadow-orange-500/30 hover:!bg-orange-600">
+                            {t('hero.cta')}
+                        </Button>
+                    </a>
                     <Link to="/schedule">
-                        <Button size="lg" variant="primary" className="border-white/30 text-white hover:bg-white hover:text-black">
+                        <Button size="lg" variant="primary" className="border-white/30 bg-transparent text-white hover:bg-white hover:text-black">
                             {t('hero.secondary')}
                         </Button>
                     </Link>
                 </div>
+
+                <a href="tel:+972547244553" className="inline-flex items-center gap-2 text-lg text-white/70 hover:text-orange-500" aria-label="Phone" dir="ltr">
+                    <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />
+                    054-724-4553
+                </a>
             </div>
         </section>
     )

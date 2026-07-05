@@ -4,7 +4,7 @@ import About from "../sections/About";
 import Classes from "../sections/Classes";
 import Hero from "../sections/Hero";
 import InstagramSection from "../sections/InstagramSection";
-import TeamSection from "../sections/TeamSection";
+// import TeamSection from "../sections/TeamSection"; // מוסתר זמנית עד שיהיו תמונות צוות
 
 export default function HomePage() {
     return (
@@ -13,7 +13,7 @@ export default function HomePage() {
             <About />
             <Classes />
             {/* <AppSection /> */}
-            <TeamSection />
+            {/* <TeamSection /> */}
             <InstagramSection />
         </>
     )

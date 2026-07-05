@@ -2,8 +2,8 @@
 export const he = {
   hero: {
     title: "לזוז טוב, להרגיש טוב, להיראות טוב",
-    subtitle: "...",
-    cta: "הירשם",
+    subtitle: "שעה ביום. כל רמה. הגרסה הכי חזקה שלך.",
+    cta: "לאימון ניסיון",
     secondary: "לוח שבועי",
   },
   about: {
